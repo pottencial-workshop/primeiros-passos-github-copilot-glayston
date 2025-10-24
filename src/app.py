@@ -38,6 +38,45 @@ activities = {
       "schedule": "Segundas, quartas e sextas, 14h - 15h",
       "max_participants": 30,
       "participants": ["john@mergington.edu", "olivia@mergington.edu"]
+   },
+   # Esportivas
+   "Futebol": {
+      "description": "Participe do time de futebol da escola",
+      "schedule": "Quartas e sextas, 16h - 17h30",
+      "max_participants": 22,
+      "participants": ["lucas@mergington.edu", "ana@mergington.edu"]
+   },
+   "Vôlei": {
+      "description": "Treinos e partidas de vôlei",
+      "schedule": "Terças e quintas, 17h - 18h",
+      "max_participants": 14,
+      "participants": ["marcos@mergington.edu", "carla@mergington.edu"]
+   },
+   # Artísticas
+   "Teatro": {
+      "description": "Oficina de teatro e apresentações",
+      "schedule": "Segundas e quartas, 16h - 17h30",
+      "max_participants": 18,
+      "participants": ["beatriz@mergington.edu", "rafael@mergington.edu"]
+   },
+   "Coral": {
+      "description": "Grupo de canto coral da escola",
+      "schedule": "Sextas, 14h - 15h30",
+      "max_participants": 25,
+      "participants": ["juliana@mergington.edu", "pedro@mergington.edu"]
+   },
+   # Intelectuais
+   "Clube de Leitura": {
+      "description": "Discussão de livros e literatura",
+      "schedule": "Terças, 17h - 18h",
+      "max_participants": 15,
+      "participants": ["lara@mergington.edu", "gustavo@mergington.edu"]
+   },
+   "Olimpíada de Matemática": {
+      "description": "Preparação para olimpíadas de matemática",
+      "schedule": "Quartas, 15h - 16h",
+      "max_participants": 20,
+      "participants": ["fernanda@mergington.edu", "rodrigo@mergington.edu"]
    }
 }
 
@@ -63,5 +102,9 @@ def signup_for_activity(activity_name: str, email: str):
     activity = activities[activity_name]
 
     # Add student
+    # Validar se o estudante já está inscrito
+    if email in activity["participants"]:
+        raise HTTPException(status_code=400, detail="Estudante já inscrito nesta atividade")
+
     activity["participants"].append(email)
     return {"message": f"{email} inscrito(a) em {activity_name} com sucesso"}
